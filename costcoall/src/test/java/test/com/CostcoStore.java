@@ -5,27 +5,15 @@
 package test.com;
 
 import java.time.Duration;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
-//import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.MethodOrderer.Alphanumeric;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import org.junit.jupiter.api.Order;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.junit.jupiter.api.TestMethodOrder;
-
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -42,14 +30,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 //@OrderWith(Alphanumeric.class)  setup problem
 //
 //
-@TestMethodOrder(Alphanumeric.class)
-//@TestMethodOrder(OrderAnnotation.class)  Tested 2, not working
+//@TestMethodOrder(Alphanumeric.class)  best 
 //@TestMethodOrder(MethodOrderer.OrderAnnotation.class) Tested 3, not working
 //@TestMethodOrder(MethodOrderer.Alphanumeric.class) tested 4, sometimes working
-
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CostcoStore {
+    // private static WebDriver driver;  
 
-    // private static WebDriver driver;   old
     private static String baseUrl;
 
     static {
@@ -57,28 +44,8 @@ public class CostcoStore {
     }
     ChromeDriver driver = new ChromeDriver();
 
-    // private static WebDriver driver  = new ChromeDriver();
+    // private static WebDriver driver  = new ChromeDriver();   old
     public CostcoStore() {
-    }
-
-    @BeforeAll
-    public static void setUpClass() {
-    }
-
-    @AfterAll
-    public static void tearDownClass() {
-    }
-
-    @BeforeEach
-    public void setUp() {
-//        System.setProperty("webdriver.chrome.driver", "c:\\data\\chromedriver.exe"); if parts independed 
-//        driver = new ChromeDriver();
-//        baseUrl = "https://www.google.com/";
-//        driver.manage().window().maximize();
-    }
-
-    @AfterEach
-    public void tearDown() {
     }
 
     // TODO add test methods here.
@@ -87,10 +54,9 @@ public class CostcoStore {
     // @Test
     // public void hello() {}
     @Test
-    //@Order(1)
 
     //public void testA_CostcoSearch() throws Exception {
-    public void testA() throws Exception {
+    public void test1() throws Exception {
         System.out.println("first");
 
         // System.setProperty("webdriver.chrome.driver", "c:\\data\\chromedriver.exe");  old
@@ -105,17 +71,16 @@ public class CostcoStore {
         driver.findElement(By.id("search-field")).sendKeys("dell laptop");
         driver.findElement(By.id("formcatsearch")).submit();
         //Thread.sleep(6000);
+        test2();
     }
 //Add to cart
 //@Order(2)
 
-    @Test
-    //@Order(2)
+
 
     //public void testB_AddToCart() throws Exception {
-    public void testB() throws Exception {
-        //   System.setProperty("webdriver.chrome.driver", "c:\\data\\chromedriver.exe");   
-        //   driver = new ChromeDriver();
+    public void test2() throws Exception {
+
 
         System.out.println("second");
         //Thread.sleep(8000);   old
@@ -123,7 +88,7 @@ public class CostcoStore {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollTo(0, 200)");
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[@automation-id=\"productDescriptionLink_0\"]")));
 
         driver.findElement(By.xpath("//a[@automation-id=\"productDescriptionLink_0\"]")).click();
@@ -150,16 +115,18 @@ public class CostcoStore {
         wait3.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@automation-id=\"shopCartCheckoutButton\"]")));
         driver.findElement(By.xpath("//input[@automation-id=\"shopCartCheckoutButton\"]")).click();
 
+        test3();
         // Thread.sleep(5000);
     }
 // Login   
     // @Order(3)
 
-    @Test
-    //@Order(3)
+  
 
     //public void testC_LogIn() throws Exception {
-    public void testC() throws Exception {
+    public void test3() throws Exception {
+        
+         System.out.println("third");
 
         //Thread.sleep(5000); 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
@@ -187,4 +154,3 @@ public class CostcoStore {
     }
 
 }
-
